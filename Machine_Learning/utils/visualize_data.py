@@ -4,10 +4,7 @@ from collections import Counter
 from utils.load_data import load_texts_and_labels
 from utils.preprocess import preprocess_texts
 
-def visualize():
-    # Load and preprocess data
-    texts, labels = load_texts_and_labels()
-    texts_cleaned = preprocess_texts(texts)
+def visualize(texts_cleaned, labels):
 
     # ---------- HISTOGRAM OF LABELS ----------
     label_counts = Counter(labels)
@@ -31,3 +28,6 @@ def visualize():
     plt.title("Word Cloud of Dataset")
     plt.tight_layout()
     plt.show()
+
+if __name__ == "__main__":
+    visualize()
