@@ -2,20 +2,19 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import time
 
-def train_doc2vec(texts, labels):
-    tagged_data = [TaggedDocument(words=t.split(), tags=[str(i)]) for i, t in enumerate(texts)]
-    model = Doc2Vec(vector_size=100, alpha=0.025, min_count=2, epochs=40)
-    model.build_vocab(tagged_data)
-    model.train(tagged_data, total_examples=model.corpus_count, epochs=model.epochs)
+# def train_doc2vec(texts, labels):
+#     tagged_data = [TaggedDocument(words=t.split(), tags=[str(i)]) for i, t in enumerate(texts)]
+#     model = Doc2Vec(vector_size=100, alpha=0.025, min_count=2, epochs=40)
+#     model.build_vocab(tagged_data)
+#     model.train(tagged_data, total_examples=model.corpus_count, epochs=model.epochs)
 
-    vectors = [model.infer_vector(doc.words) for doc in tagged_data]
-    return np.array(vectors), labels
+#     vectors = [model.infer_vector(doc.words) for doc in tagged_data]
+#     return np.array(vectors), labels
 
 def get_models():
     return {
