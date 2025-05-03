@@ -15,16 +15,16 @@ models_params = {
             "solver": ['liblinear', 'lbfgs']
         }
     },
-    "Multinomial Naive Bayes": {
-        "model": MultinomialNB(),
-        "params": {
-            "alpha": [0.5, 1.0, 1.5]
-        }
-    },
     "Linear SVM": {
         "model": LinearSVC(),
         "params": {
             "C": [0.01, 0.1, 1, 10]
+        }
+    },
+    "Multinomial Naive Bayes": {
+        "model": MultinomialNB(),
+        "params": {
+            "alpha": [0.5, 1.0, 1.5]
         }
     }
 }
