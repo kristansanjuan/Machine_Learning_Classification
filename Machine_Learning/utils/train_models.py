@@ -4,7 +4,6 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpy as np
 import time
 
 # def train_doc2vec(texts, labels):
@@ -51,12 +50,22 @@ def train_and_evaluate(X_train, X_test, y_train, y_test, label_names):
         plt.xlabel("Predicted")
         plt.ylabel("Actual")
         plt.show()
+
         results.append({
             "Model": name,
             "Type": "Baseline",
             "Accuracy": acc,
             "F1": f1
         })
+
+    print("\n📋 Baseline Results:\n")
+    for result in results:
+        print(f"Model: {result['Model']}")
+        print(f"Type: {result['Type']}")
+        print(f"Accuracy: {result['Accuracy']:.4f}")
+        print()
+
+    return results
 
 def train_all_models(X_train, X_test, y_train, y_test):
     label_names = sorted(list(set(y_train) | set(y_test)))
