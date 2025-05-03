@@ -58,15 +58,17 @@ def tune_models(X_train, y_train, X_test, y_test):
             "Model": name,
             "Type": "Tuned",
             "Accuracy": acc,
-            "F1": f1
+            "F1": f1,
+            "Time": f"{end - start:.2f}s"
         })
 
     print("\n📋 Tuned Results:")
     for r in results:
         print(f"Model: {r['Model']}")
         print(f"Type: {r['Type']}")
-        print(f"Accuracy: {r['Accuracy']:.4f}")
-        print(f"F1: {r['F1']:.4f}")
-        print("-" * 30)
+        print(f"Accuracy: {r['Accuracy']}")
+        print(f"F1: {r['F1']}")
+        print(f"Time: {r['Time']}")
+        print()
 
     return results

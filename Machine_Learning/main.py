@@ -40,8 +40,16 @@ def main():
     # Combine and show
     all_results = baseline_results + tuned_results
     df = pd.DataFrame(all_results)
+    baseline_df = pd.DataFrame(baseline_results)
+    tuned_df = pd.DataFrame(tuned_results)
+
+    merged_df = pd.merge(
+        baseline_df, tuned_df, on="Model", suffixes=(" (Baseline)", " (Tuned)")
+    )
+
+    # Display the comparison
     print("\n📊 Comparison of Baseline vs Tuned Models:")
-    print(df)
+    print(merged_df)
 
     # Optionally save or plot
     df.to_csv("model_comparison.csv", index=False)
