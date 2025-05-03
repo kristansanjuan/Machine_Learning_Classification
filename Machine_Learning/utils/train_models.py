@@ -25,6 +25,7 @@ def get_models():
 
 def train_and_evaluate(X_train, X_test, y_train, y_test, label_names):
     models = get_models()
+    results = []
     for name, clf in models.items():
         print(f"\nTraining {name}...")
         start = time.time()
@@ -50,7 +51,13 @@ def train_and_evaluate(X_train, X_test, y_train, y_test, label_names):
         plt.xlabel("Predicted")
         plt.ylabel("Actual")
         plt.show()
+        results.append({
+            "Model": name,
+            "Type": "Baseline",
+            "Accuracy": acc,
+            "F1": f1
+        })
 
 def train_all_models(X_train, X_test, y_train, y_test):
     label_names = sorted(list(set(y_train) | set(y_test)))
-    train_and_evaluate(X_train, X_test, y_train, y_test, label_names)
+    return train_and_evaluate(X_train, X_test, y_train, y_test, label_names)
