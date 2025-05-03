@@ -58,11 +58,12 @@ def train_and_evaluate(X_train, X_test, y_train, y_test, label_names):
             "F1": f1
         })
 
-    print("\n📋 Baseline Results:\n")
+    print("\n📋 All Baseline Results:\n")
     for result in results:
         print(f"Model: {result['Model']}")
         print(f"Type: {result['Type']}")
         print(f"Accuracy: {result['Accuracy']:.4f}")
+        print(f"F1: {result['F1']:.4f}")
         print()
 
     return results
