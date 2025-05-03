@@ -54,6 +54,13 @@ def tune_models(X_train, y_train, X_test, y_test):
         print(f"📊 Classification Report for {name}:\n")
         print(classification_report(y_test, y_pred))
 
+        results.append({
+            "Model": name,
+            "Type": "Tuned",
+            "Accuracy": acc,
+            "F1": f1
+        })
+
     print("\n📋 Tuned Results:")
     for r in results:
         print(f"Model: {r['Model']}")
