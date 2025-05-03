@@ -2,7 +2,7 @@ import argparse
 
 from utils.load_data import load_texts_and_labels
 from utils.preprocess import preprocess_texts
-from utils.train_models import train_all_models, train_and_evaluate #, train_doc2vec
+from utils.train_models import train_all_models#, train_and_evaluate , train_doc2vec
 from vectorize import vectorize_texts
 from sklearn.model_selection import train_test_split
 from utils.visualize_data import visualize
