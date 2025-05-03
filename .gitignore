@@ -1,3 +1,4 @@
 Data
 model_comparison.csv
 **/__pycache__/
+*.py[cod]
