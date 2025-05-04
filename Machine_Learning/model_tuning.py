@@ -1,45 +1,52 @@
-# model_tuning.py
-
 import time
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, accuracy_score, f1_score
+
+cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
 
 models_params = {
     "Logistic Regression": {
-        "model": LogisticRegression(max_iter=1000),
+        "model": LogisticRegression(max_iter=2000),  # Added model instance
         "params": {
-            "C": [0.01, 0.1, 1, 10],
-            "solver": ['liblinear', 'lbfgs']
+            "C": [0.001, 0.01, 0.1, 1, 10, 100],
+            "solver": ['liblinear', 'saga'],
+            "penalty": ['l1', 'l2']
         }
     },
     "Linear SVM": {
-        "model": LinearSVC(),
+        "model": LinearSVC(max_iter=5000),  # Added model instance
         "params": {
-            "C": [0.01, 0.1, 1, 10]
+            "C": [0.001, 0.01, 0.1, 1, 10, 100],
+            "loss": ['hinge', 'squared_hinge']
         }
     },
     "Multinomial Naive Bayes": {
         "model": MultinomialNB(),
         "params": {
-            "alpha": [0.5, 1.0, 1.5]
+            "alpha": [0.1, 0.5, 1.0, 1.5, 2.0]
         }
     }
 }
 
 def tune_models(X_train, y_train, X_test, y_test):
-    from sklearn.metrics import accuracy_score, f1_score
-
     results = []
 
     for name, mp in models_params.items():
         print(f"\n🔍 Tuning {name}...")
         start = time.time()
-        grid = GridSearchCV(mp["model"], mp["params"], cv=5, scoring='f1_macro')
-        grid.fit(X_train, y_train)
 
+        grid = GridSearchCV(
+            mp["model"],
+            mp["params"],
+            cv=cv,
+            scoring='f1_macro',
+            n_jobs=-1,
+            verbose=2
+        )
+        grid.fit(X_train, y_train)
         end = time.time()
 
         y_pred = grid.predict(X_test)
@@ -49,10 +56,8 @@ def tune_models(X_train, y_train, X_test, y_test):
         print(f"{name} Accuracy: {acc*100:.2f}%")
         print(f"{name} F1 Score: {f1*100:.2f}%")
         print(f"{name} Time: {end - start:.2f}s")
-
         print(f"✅ Best params for {name}: {grid.best_params_}")
-        print(f"📊 Classification Report for {name}:\n")
-        print(classification_report(y_test, y_pred))
+        print(f"📊 Classification Report:\n{classification_report(y_test, y_pred)}")
 
         results.append({
             "Model": name,
@@ -61,14 +66,5 @@ def tune_models(X_train, y_train, X_test, y_test):
             "F1": f1,
             "Time": f"{end - start:.2f}s"
         })
-
-    print("\n📋 Tuned Results:")
-    for r in results:
-        print(f"Model: {r['Model']}")
-        print(f"Type: {r['Type']}")
-        print(f"Accuracy: {r['Accuracy']}")
-        print(f"F1: {r['F1']}")
-        print(f"Time: {r['Time']}")
-        print()
 
     return results

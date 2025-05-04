@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
-from utils.load_data import load_texts_and_labels
-from utils.preprocess import preprocess_texts
 
 def visualize(texts_cleaned, labels):
 

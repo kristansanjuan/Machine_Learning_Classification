@@ -1,34 +1,43 @@
-import argparse
+import time
+import pandas as pd
+import os
 
 from utils.load_data import load_texts_and_labels
-from utils.preprocess import preprocess_texts
-from utils.train_models import train_all_models#, train_and_evaluate , train_doc2vec
-from vectorize import vectorize_texts
+from utils.train_models import train_all_models
 from sklearn.model_selection import train_test_split
 from utils.visualize_data import visualize
 from model_tuning import tune_models
-from model_tuning import tune_models
-import pandas as pd
+from utils.preprocess import parallel_preprocess
+
 
 def main():
 
+    os.system("cls||clear")
+    total_start = time.time()
     # Load data
     texts, labels = load_texts_and_labels()
 
+    start = time.time()
     # Preprocess data
-    texts_cleaned = preprocess_texts(texts)
+    texts_cleaned = parallel_preprocess(texts, enable_spell_check=False)
+    end = time.time()
+    print(f"Preprocessing time: {end - start:.2f} seconds")
 
     visualize(texts_cleaned, labels)
     
     # Vectorize
-    X_tfidf, vectorizer = vectorize_texts(texts_cleaned)
+    from config import TFIDF_MAX_FEATURES, TFIDF_NGRAM_RANGE
     from sklearn.feature_extraction.text import TfidfVectorizer
-    vectorizer = TfidfVectorizer()
+
+    vectorizer = TfidfVectorizer(
+        max_features=TFIDF_MAX_FEATURES,
+        ngram_range=TFIDF_NGRAM_RANGE
+    )
     X = vectorizer.fit_transform(texts_cleaned)
 
     # Split
     X_train_tf, X_test_tf, y_train_tf, y_test_tf = train_test_split(
-        X_tfidf, labels, test_size=0.2, random_state=42
+        X, labels, test_size=0.2, random_state=42
     )
 
     # Train models
@@ -49,10 +58,15 @@ def main():
 
     # Display the comparison
     print("\n📊 Comparison of Baseline vs Tuned Models:")
-    print(merged_df)
+    print(merged_df.sort_values(by='Accuracy (Tuned)', ascending=False))
 
     # Optionally save or plot
+    print("\nResults saved to model_comparison.csv")
+
     df.to_csv("model_comparison.csv", index=False)
+
+    total_end = time.time()
+    print(f"Total time: {total_end - total_start:.2f} seconds")
 
 if __name__ == "__main__":
     main()
