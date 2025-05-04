@@ -1,9 +1,11 @@
 import time
+import seaborn as sns
+from matplotlib import pyplot as plt
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
-from sklearn.metrics import classification_report, accuracy_score, f1_score
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, f1_score
 
 cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
 
@@ -58,6 +60,16 @@ def tune_models(X_train, y_train, X_test, y_test):
         print(f"{name} Time: {end - start:.2f}s")
         print(f"✅ Best params for {name}: {grid.best_params_}")
         print(f"📊 Classification Report:\n{classification_report(y_test, y_pred)}")
+
+        # Confusion matrix for Linear SVM
+        if name == "Linear SVM":
+            cm = confusion_matrix(y_test, y_pred)
+            plt.figure(figsize=(8, 6))
+            sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+            plt.title("Confusion Matrix for Linear SVM")
+            plt.xlabel("Predicted Label")
+            plt.ylabel("True Label")
+            plt.show()
 
         results.append({
             "Model": name,
