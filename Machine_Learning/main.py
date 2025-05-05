@@ -19,7 +19,7 @@ def main():
 
     start = time.time()
     # Preprocess data
-    texts_cleaned = parallel_preprocess(texts, enable_spell_check=False)
+    texts_cleaned, _ = parallel_preprocess(texts, enable_spell_check=False)
     end = time.time()
     print(f"Preprocessing time: {end - start:.2f} seconds")
 

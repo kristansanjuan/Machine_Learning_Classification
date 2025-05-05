@@ -11,7 +11,7 @@ cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
 
 models_params = {
     "Logistic Regression": {
-        "model": LogisticRegression(max_iter=2000),  # Added model instance
+        "model": LogisticRegression(max_iter=3000),  # Added model instance
         "params": {
             "C": [0.001, 0.01, 0.1, 1, 10, 100],
             "solver": ['liblinear', 'saga'],
