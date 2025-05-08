@@ -6,11 +6,10 @@ folder_paths = {
 
 RANDOM_STATE = 42
 
-# TF-IDF settings
 # TF-IDF settings (updated)
-TFIDF_MAX_FEATURES = 25000          # Increased from 10k
-TFIDF_NGRAM_RANGE = (1, 3)          # Now includes trigrams
-TFIDF_ANALYZER = 'word'             # Try 'char_wb' later if needed
+TFIDF_MAX_FEATURES = 25000          # Maximum number of features to extract
+TFIDF_NGRAM_RANGE = (1, 3)          # tri-grams
+TFIDF_ANALYZER = 'word'             
 TFIDF_MIN_DF = 3                    # Ignore rare terms
 TFIDF_MAX_DF = 0.9                  # Ignore overly common terms
 

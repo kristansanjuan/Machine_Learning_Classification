@@ -9,6 +9,7 @@ from sklearn.metrics import classification_report, accuracy_score, confusion_mat
 
 cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
 
+# Define the models and their parameters for tuning
 models_params = {
     "Logistic Regression": {
         "model": LogisticRegression(max_iter=3000),  # Added model instance
@@ -61,7 +62,7 @@ def tune_models(X_train, y_train, X_test, y_test):
         print(f"✅ Best params for {name}: {grid.best_params_}")
         print(f"📊 Classification Report:\n{classification_report(y_test, y_pred)}")
 
-        # Confusion matrix for Linear SVM
+        # Confusion matrix for Linear SVM best model
         if name == "Linear SVM":
             cm = confusion_matrix(y_test, y_pred)
             plt.figure(figsize=(8, 6))

@@ -14,7 +14,7 @@ spell = SpellChecker()
 
 def clean_text(text, enable_spell_check=False):
     if not text:
-        return "", 0  # Return empty string and 0 deleted chars
+        return "", 0  # Return empty string and zero deleted characters if text is empty
 
     original_length = len(text)
     
@@ -31,7 +31,7 @@ def clean_text(text, enable_spell_check=False):
     digits_deleted = len(text) - len(text_no_digits)
     text = text_no_digits
 
-    # Optional spell check
+    # Optional spell check(wag gamitin masakit sa PC)
     if enable_spell_check:
         corrected_words = []
         for word in text.split():

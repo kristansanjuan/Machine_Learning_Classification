@@ -2,6 +2,7 @@ import os
 
 def load_texts_and_labels():
     folder_paths = {
+        #change mo JOM pag inayos mo na to
         "left": "C:\\Users\\A Gaming\\Downloads\\archive\\Data\\Left Data",
         "right": "C:\\Users\\A Gaming\\Downloads\\archive\\Data\\Right Data",
         "center": "C:\\Users\\A Gaming\\Downloads\\archive\\Data\\Center Data"
